@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Multi Chart</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+    <script src="https://www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js"></script>
+</head>
+<body>
+    <div id="amchart1" style="width:100%;height:500px;">
+    </div>
+
+<script>
+// var amchart1;
+      try {
+AmCharts.loadFile( "csv/us_momentum_leading.csv", {}, function( response ) {
+
+  var data = AmCharts.parseCSV( response, {
+    "useColumnNames": true,
+  });
+
+  var i;
+  var year;
+  var month;
+  var ddate;
+  data.pop();
+
+  for (i = 0; i < data.length; i++) {
+    fulldate = data[i]["date"].toString();
+    year = fulldate.substring(6, 10);
+    month = fulldate.substring(3, 5);
+    ddate = fulldate.substring(0, 2);
+    data[i]["date"] = (year + "-" + month + "-" + ddate);
+  }
+
+
+  var amchart1 = AmCharts.makeChart( "amchart1", {
+        "type": "serial",
+        "theme": "light",
+        "marginRight": 40,
+        "marginLeft": 40,
+        "autoMarginOffset": 20,
+        "dataProvider": data,
+        "mouseWheelZoomEnabled": true,
+        // "dataDateFormat": "DD/MM/YYYY",
+        "dataDateFormat": "YYYY-MM-DD",
+        "valueAxes": [{
+            "id": "v1",
+            "axisAlpha": 0,
+            "position": "left",
+            "ignoreAxisWidth":true
+        }],
+        "balloon": {
+            "borderThickness": 1,
+            "shadowAlpha": 0
+        },
+        "graphs": [{
+            "id": "g1",
+            "balloon":{
+            "drop":true,
+            "adjustBorderColor":false,
+            "color":"#ffffff"
+            },
+            "lineColor": "#d1655d",
+            "negativeLineColor": "#637bb6",
+            "bullet": "round",
+            "bulletBorderAlpha": 1,
+            "bulletColor": "#FFFFFF",
+            "bulletSize": 5,
+            "hideBulletsCount": 50,
+            "lineThickness": 2,
+            "title": "red line",
+            "useLineColorForBulletBorder": true,
+            "valueField": "leading_momentum",
+            "balloonText": "<span style='font-size:18px;'>[[value]]</span>"
+        }],
+        "chartScrollbar": {
+            "graph": "g1",
+            "oppositeAxis":false,
+            "offset":30,
+            "scrollbarHeight": 80,
+            "backgroundAlpha": 0,
+            "selectedBackgroundAlpha": 0.1,
+            "selectedBackgroundColor": "#888888",
+            "graphFillAlpha": 0,
+            "graphLineAlpha": 0.5,
+            "selectedGraphFillAlpha": 0,
+            "selectedGraphLineAlpha": 1,
+            "autoGridCount":true,
+            "color":"#AAAAAA"
+        },
+        "chartCursor": {
+            "pan": true,
+            "valueLineEnabled": true,
+            "valueLineBalloonEnabled": true,
+            "cursorAlpha":1,
+            "cursorColor":"#258cbb",
+            "limitToGraph":"g1",
+            "valueLineAlpha":0.2,
+            "valueZoomable":true
+        },
+        "valueScrollbar": {
+        "oppositeAxis": false,
+        "offset": 50,
+        "scrollbarHeight": 10
+        },
+        "categoryField": "date",
+        "categoryAxis": {
+            "parseDates": true,
+            "dashLength": 1,
+            "minorGridEnabled": true
+        },
+    });
+  	// amchart1.addListener("rendered", zoomChart);
+   //      if(amchart1.zoomChart){
+   //          amchart1.zoomChart();
+   //      }
+});
+}
+catch( err ) { console.log( err ); } 
+// function zoomChart(){
+//         amchart1.zoomToIndexes(Math.round(amchart1.dataProvider.length * 0.4), Math.round(amchart1.dataProvider.length * 0.55));
+//     }
+
+   </script>
+
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+.amChartsPeriodSelector .amChartsButton {
+  padding-top: 5px;
+  padding-bottom: 3px;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  border: 0;
+  border-bottom: 1px solid #dddddd;
+  outline: none;
+  background: #fff;
+  color: #000;
+}
+
+.amChartsPeriodSelector .amChartsButton:hover {
+  background-color: #eeeeee;
+}
+
+.amChartsPeriodSelector .amChartsButtonSelected {
+  background-color: #fff;
+  border: 0;
+  border-bottom: 1px solid #0088CC;
+  color: #000000;
+  padding-bottom: 3px;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  margin: 1px;
+  outline: none;
+}
